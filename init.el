@@ -6,7 +6,7 @@
     (set-frame-position frame x y)
     (set-frame-size frame w h)))
 
-(arrange-frame 190 90 1200 5)
+                                        ; (arrange-frame 190 90 1200 5)
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -37,6 +37,18 @@
   (when (not (package-installed-p p))
     (package-refresh-contents)
     (package-install p)))
+
+(set-frame-height
+  (selected-frame)
+  (/ (display-pixel-height) (frame-char-height)))
+
+(set-frame-width
+  (selected-frame)
+  (/ (/ (display-pixel-width) 2) (frame-char-width)))
+
+(set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
 
 ;; solarized
 (load-theme 'solarized-dark t)
