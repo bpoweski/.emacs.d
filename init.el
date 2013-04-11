@@ -39,16 +39,16 @@
     (package-install p)))
 
 (set-frame-height
-  (selected-frame)
-  (/ (display-pixel-height) (frame-char-height)))
+ (selected-frame)
+ (/ (display-pixel-height) (frame-char-height)))
 
 (set-frame-width
-  (selected-frame)
-  (/ (/ (display-pixel-width) 2) (frame-char-width)))
+ (selected-frame)
+ (/ (/ (display-pixel-width) 2) (frame-char-width)))
 
 (set-terminal-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
-  (prefer-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 
 ;; solarized
 (load-theme 'solarized-dark t)
@@ -62,6 +62,7 @@
 (require 'whitespace)
 (add-hook 'clojure-mode-hook 'whitespace-mode)
 (setq whitespace-line-column 110)
+(setq delete-trailing-lines nil)
 
 ;; auto complete
 (require 'auto-complete-config)
@@ -77,6 +78,7 @@
 ;; (require 'clojure-test-mode)
 
 (require 'midje-mode)
+(add-hook 'clojure-mode-hook 'midje-mode)
 
 (defun midje-display-reward ()
   (t 'clojure-test-success-face))
@@ -102,3 +104,6 @@
 
 ;; change dir
 (cd "~/Projects/getaroom/price_sheet")
+
+(setenv "MIDJE_COLORIZE" "false")
+(setenv "FRAMEWORK_ENV" "test")
