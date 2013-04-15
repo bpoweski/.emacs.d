@@ -107,3 +107,5 @@
 
 (setenv "MIDJE_COLORIZE" "false")
 (setenv "FRAMEWORK_ENV" "test")
+(setenv "RABBITMQ_VHOST" "/price_sheet_test")
+(setenv "MONGODB_URI" "mongodb://127.0.0.1:27017/price_sheet_test")
