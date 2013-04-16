@@ -50,6 +50,9 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; reload all buffers
+(global-auto-revert-mode t)
+
 ;; solarized
 (load-theme 'solarized-dark t)
 
