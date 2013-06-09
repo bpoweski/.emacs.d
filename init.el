@@ -75,10 +75,17 @@
 ;; rebind save to cleanup crap
 (add-hook 'before-save-hook 'esk-cleanup-buffer)
 
+;; clj align lets
+(require 'align-cljlet)
+
 ;; clojure mode
 (require 'clojure-mode)
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 ;; (require 'clojure-test-mode)
+
+;; octave mode
+(autoload 'octave-mode "octave-mod" nil t)
+(setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
 (require 'midje-mode)
 (add-hook 'clojure-mode-hook 'midje-mode)
