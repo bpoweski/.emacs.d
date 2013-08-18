@@ -31,7 +31,8 @@
                       clojure-mode
                       midje-mode
                       nrepl
-                      ac-nrepl))
+                      ac-nrepl
+                      slamhound))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -77,15 +78,14 @@
 
 ;; clj align lets
 (require 'align-cljlet)
+                                        ; (eval-after-load "clojure-mode"
+                                        ;   '(define-key 'clojure-mode-map [(super meta \])] 'align-cljlet))
+
 
 ;; clojure mode
 (require 'clojure-mode)
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 ;; (require 'clojure-test-mode)
-
-;; octave mode
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
 (require 'midje-mode)
 (add-hook 'clojure-mode-hook 'midje-mode)
@@ -97,10 +97,12 @@
 (require 'ac-nrepl)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(setq nrepl-history-file "~/.emacs.d/nrepl-history")
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'nrepl-mode))
 
 (setq nrepl-popup-stacktraces nil)
+(add-hook 'nrepl-mode-hook 'subword-mode)
 
 (defun set-auto-complete-as-completion-at-point-function ()
   (setq completion-at-point-functions '(auto-complete)))
@@ -108,6 +110,19 @@
 
 (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'nrepl-mode-hook 'paredit-mode)
+
+(defun clear-shell ()
+   (interactive)
+   (let ((old-max comint-buffer-maximum-size))
+     (setq comint-buffer-maximum-size 0)
+     (comint-truncate-buffer)
+     (setq comint-buffer-maximum-size old-max)))
+
+;; ess
+(require 'ess-site)
+(setq auto-mode-alist (cons '("\\.R$" . R-mode) auto-mode-alist))
+(ess-toggle-underscore nil)
 
 ;; line numbers
 (global-linum-mode t)
